@@ -52,7 +52,7 @@ def new_item():
     # - redirect the user to the item detail page.
     if form.validate_on_submit():
         new_item = GroceryItem(
-            name=form.title.data,
+            name=form.name.data,
             price=form.price.data,
             category=form.category.data,
             photo_url=form.photo_url.data,
@@ -99,7 +99,7 @@ def item_detail(item_id):
     # - flash a success message, and
     # - redirect the user to the item detail page.
     if form.validate_on_submit():
-        item.name = form.title.data
+        item.name = form.name.data
         item.price = form.price.data
         item.category = form.category.data
         item.photo_url = form.photo_url.data
