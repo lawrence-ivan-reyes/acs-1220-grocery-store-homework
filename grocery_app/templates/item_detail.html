@@ -14,17 +14,32 @@
 
 <h2>Edit Item</h2>
 
-<form>
+<form method="POST">
     <fieldset>
         <legend>Please enter your information:</legend>
 
-
+        {{ form.csrf_token }}
 
         <!-- TODO: Remove the next paragraph and use the `form` object passed in 
             from the route to render a form. -->
-        <p><em>Form fields go here!</em></p>
-
-        <input type="submit" value="Submit">
+        <div class="form-group">
+            {{ form.title.label }}
+            {{ form.title }}
+            
+            {{ form.price.label }}
+            {{ form.price }}
+            
+            {{ form.category.label }}
+            {{ form.category }}
+            
+            {{ form.photo_url.label }}
+            {{ form.photo_url }}
+            
+            {{ form.store.label }}
+            {{ form.store }}
+            
+            {{ form.submit }}
+        </div>
     </fieldset>
 </form>
 
