@@ -1,5 +1,6 @@
 from grocery_app.extensions import db
 from grocery_app.utils import FormEnum
+from flask_login import UserMixin
 
 
 class ItemCategory(FormEnum):
@@ -11,7 +12,7 @@ class ItemCategory(FormEnum):
     FROZEN = 'Frozen'
     OTHER = 'Other'
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     """User model for authentication and tracking contributions."""
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), nullable=False, unique=True)
