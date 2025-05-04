@@ -13,4 +13,9 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 # create bcrypt
-bcrypt = Bcrypt(app) 
+bcrypt = Bcrypt(app)
+
+# import routes and register blueprints
+from grocery_app.routes import main, auth
+app.register_blueprint(main)
+app.register_blueprint(auth) 
