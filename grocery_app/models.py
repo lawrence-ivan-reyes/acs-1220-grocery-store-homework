@@ -2,6 +2,12 @@ from grocery_app.extensions import db
 from grocery_app.utils import FormEnum
 from flask_login import UserMixin
 
+# creating bridge table for shopping list feature
+shopping_list_table = db.Table('shopping_list_table',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('item_id', db.Integer, db.ForeignKey('grocery_item.id'))
+)
+
 
 class ItemCategory(FormEnum):
     """Categories of grocery items."""
@@ -17,6 +23,8 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), nullable=False, unique=True)
     password = db.Column(db.String(200), nullable=False)
+    shopping_list_items = db.relationship('GroceryItem', secondary=shopping_list_table, 
+                                         backref=db.backref('users_who_want', lazy='dynamic'))
 
 
 class GroceryStore(db.Model):

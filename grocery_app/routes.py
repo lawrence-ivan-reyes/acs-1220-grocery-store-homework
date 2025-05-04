@@ -155,3 +155,29 @@ def logout():
     logout_user()
     return redirect(url_for('main.homepage'))
 
+@main.route('/add_to_shopping_list/<item_id>', methods=['POST'])
+@login_required
+def add_to_shopping_list(item_id):
+    item = GroceryItem.query.get(item_id)
+    if item:
+        current_user.shopping_list_items.append(item)
+        db.session.commit()
+        flash(f'Added {item.name} to your shopping list!')
+    return redirect(url_for('main.item_detail', item_id=item_id))
+
+@main.route('/shopping_list')
+@login_required
+def shopping_list():
+    shopping_list_items = current_user.shopping_list_items
+    return render_template('shopping_list.html', shopping_list_items=shopping_list_items)
+
+@main.route('/remove_from_shopping_list/<item_id>', methods=['POST'])
+@login_required
+def remove_from_shopping_list(item_id):
+    item = GroceryItem.query.get(item_id)
+    if item in current_user.shopping_list_items:
+        current_user.shopping_list_items.remove(item)
+        db.session.commit()
+        flash(f'Removed {item.name} from your shopping list!')
+    return redirect(url_for('main.shopping_list'))
+

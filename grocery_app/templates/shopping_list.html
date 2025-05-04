@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Your Shopping List</h1>
+
+{% if shopping_list_items %}
+    <div class="items">
+        {% for item in shopping_list_items %}
+        <div class="item-details">
+            <a href="{{ url_for('main.item_detail', item_id=item.id) }}">
+                <img src="{{ item.photo_url }}" alt="{{ item.name }}" width="200px">
+                <p><strong>{{ item.name }}</strong></p>
+            </a>
+            <p><strong>Price: ${{ item.price }}</strong></p>
+            <p><strong>Category:</strong> {{ item.category }}</p>
+            <p><strong>Store:</strong> <a href="{{ url_for('main.store_detail', store_id=item.store.id) }}">{{ item.store.title }}</a></p>
+            
+            <form action="{{ url_for('main.remove_from_shopping_list', item_id=item.id) }}" method="POST">
+                <button type="submit" class="btn btn-danger">Remove from List</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>Your shopping list is empty. Add some items!</p>
+{% endif %}
+
+{% endblock %} 
